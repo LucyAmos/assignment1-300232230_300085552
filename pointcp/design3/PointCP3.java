@@ -89,7 +89,7 @@ public class PointCP3 {
   /**
    * Converts Cartesian coordinates to Polar coordinates.
    */
-  public void convertStorageToPolar()
+  public void convertStorageToCartesian()
   {
     if(typeCoord != 'C')
     {
@@ -107,7 +107,7 @@ public class PointCP3 {
    */
 
  
-  public void convertStorageToCartesian()
+  public void convertStorageToPolar()
   {
     if(typeCoord != 'P')
     {

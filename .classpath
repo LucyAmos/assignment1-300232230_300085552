@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry excluding="design2/|design3/|design1(original)/" kind="src" path="pointcp"/>
+	<classpathentry excluding="design2/|design3/|design1(original)/|design5/" kind="src" path="pointcp"/>
 	<classpathentry kind="src" path="pointcp/design1(original)"/>
 	<classpathentry kind="src" path="pointcp/design2"/>
 	<classpathentry kind="src" path="pointcp/design3"/>
+	<classpathentry kind="src" path="pointcp/design5"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
