@@ -1,11 +1,4 @@
 
-//Question FOR TA?
-
-/**
- * convertSTorgae to cartesian also just simply returned or the intrsutcion dont apply?
- * 
- */
-
 // This file is a modification of the design1/PointCP 
 // This file contains material supporting section 2.9 of the textbook:
 // "Object Oriented Software Engineering" and is issued under the open-source
@@ -17,15 +10,15 @@
  * them into the other type. It is not an optimal design, it is used
  * only to illustrate some design issues.
  * 
- * Design 2: Store polar coordinates only 
- * Cartesian coordinates are computed on demand, but not stored	
- * Polar coordianates are simply returned
+ * Design 3: Store Cartesian coordinates only 
+ * Polar coordinates are computed on demand, but not stored	
+ * Cartesian coordianates are simply returned
  *
  * @author Lucy Amos
  * @author Raphaelle Jean-Baptiste
  * @version May 2023
  */
-public class PointCP2 {
+public class PointCP3 {
 //Instance variables ************************************************
 
   /**
@@ -38,15 +31,13 @@ public class PointCP2 {
    * Contains the current value of X or RHO depending on the type
    * of coordinates.
    */
-  //private double xOrRho;
-  private double Rho;
+  private double x;
   
   /**
    * Contains the current value of Y or THETA value depending on the
    * type of coordinates.
    */
-  //private double yOrTheta;
-  private double Theta;
+  private double y;
 	
   
   //Constructors ******************************************************
@@ -56,15 +47,15 @@ public class PointCP2 {
    * Store
    */
 
-  public PointCP2(char type, double Rho, double Theta)
+  public PointCP3(char type, double x, double y)
   {
     if(type != 'C' && type != 'P')
       throw new IllegalArgumentException();
     
     //Store polar coordinates
-    if(type == 'P'){
-        this.Rho = Rho;
-        this.Theta = Theta;
+    if(type == 'C'){
+        this.x = x;
+        this.y = y;
     }
 
     //store type
@@ -76,34 +67,22 @@ public class PointCP2 {
  //Cartesian
   public double getX()
   {
-    //if(typeCoord == 'C') 
-      //return xOrRho;
-    //else 
-    return (Math.cos(Math.toRadians(Theta)) * Rho);
+    return x;
   }
   
   public double getY()
-  {
-    //if(typeCoord == 'C') 
-      //return yOrTheta;
-    //else 
-    return (Math.sin(Math.toRadians(Theta)) * Rho);
+  { 
+    return y;
   }
   
   public double getRho()
-  {
-    //if(typeCoord == 'P') 
-    return Rho;
-    //else 
-    //  return (Math.sqrt(Math.pow(xOrRho, 2) + Math.pow(yOrTheta, 2)));
+  { 
+    return (Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2)));
   }
   
   public double getTheta()
   {
-    //if(typeCoord == 'P')
-    return Theta;
-    //else 
-    //  return Math.toDegrees(Math.atan2(yOrTheta, xOrRho));
+    return Math.toDegrees(Math.atan2(y, x));
   }
   
 	
@@ -112,38 +91,33 @@ public class PointCP2 {
    */
   public void convertStorageToPolar()
   {
-    if(typeCoord != 'P')
+    if(typeCoord != 'C')
     {
-      //Calculate RHO and THETA
+    	// Set x and y
+    	
+      x = getX();
+      y = getY();
 
-      /*
-      double temp = getRho();
-      Theta = getTheta();
-      Rho = temp;
-      */
-    
-      Rho = getRho();
-      Theta = getTheta();
-
-      typeCoord = 'P';  //Change coord type identifier
+      typeCoord = 'C';  //Change coord type identifier
     }
   }
 	
   /**
-   * Converts Polar coordinates to Cartesian coordinates.
+   * Converts C to P.
    */
 
  
   public void convertStorageToCartesian()
   {
-    if(typeCoord != 'C')
+    if(typeCoord != 'P')
     {
-      //Calculate X and Y
-      double temp = getX();
-      Theta = getY();
-      Rho = temp;
+      //Calculate Rho and Theta
+      
+    	x = getRho();
+    	y = getTheta();
+      
    
-      typeCoord = 'C';	//Change coord type identifier
+      typeCoord = 'P';	//Change coord type identifier
     }
   }
 
@@ -156,7 +130,7 @@ public class PointCP2 {
    * @param pointB The second point.
    * @return The distance between the two points.
    */
-  public double getDistance(PointCP2 pointB)
+  public double getDistance(PointCP3 pointB)
   {
     // Obtain differences in X and Y, sign is not important as these values
     // will be squared later.
@@ -174,13 +148,13 @@ public class PointCP2 {
    * @param rotation The number of degrees to rotate the point.
    * @return The rotated image of the original point.
    */
-  public PointCP2 rotatePoint(double rotation)
+  public PointCP3 rotatePoint(double rotation)
   {
     double radRotation = Math.toRadians(rotation);
     double X = getX();
     double Y = getY();
         
-    return new PointCP2('C',
+    return new PointCP3('C',
       (Math.cos(radRotation) * X) - (Math.sin(radRotation) * Y),
       (Math.sin(radRotation) * X) + (Math.cos(radRotation) * Y));
   }
@@ -193,8 +167,8 @@ public class PointCP2 {
   @Override
   public String toString()
   {
-    return "Calculated Value " + (typeCoord == 'C' 
-       ? "Cartesian  (" + getX() + "," + getY() + ")"
-       : "Polar Stored as [" + getRho() + "," + getTheta() + "]") + "\n";
+    return "Calculated Value " + (typeCoord == 'P' 
+       ? "Polar  [" + getRho() + "," + getTheta() + "]"
+       : "Cartesian Stored as (" + getX() + "," + getY() + ")") + "\n";
   }
 }
