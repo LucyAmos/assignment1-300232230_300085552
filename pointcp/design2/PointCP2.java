@@ -18,10 +18,10 @@
  * only to illustrate some design issues.
  * 
  * Design 2: Store polar coordinates only 
- * Cartesian coordinates are computed on demand, but not stored	
+ * Cartesian coordinates are computed on demand, but not stored 
  * Polar coordianates are simply returned
  *
- * @author Lucy Amos
+ * @author Lucy 
  * @author Raphaelle Jean-Baptiste
  * @version May 2023
  */
@@ -47,7 +47,7 @@ public class PointCP2 {
    */
   //private double yOrTheta;
   private double Theta;
-	
+  
   
   //Constructors ******************************************************
 
@@ -106,7 +106,7 @@ public class PointCP2 {
     //  return Math.toDegrees(Math.atan2(yOrTheta, xOrRho));
   }
   
-	
+  
   /**
    * Converts Cartesian coordinates to Polar coordinates.
    */
@@ -128,7 +128,7 @@ public class PointCP2 {
       typeCoord = 'P';  //Change coord type identifier
     }
   }
-	
+  
   /**
    * Converts Polar coordinates to Cartesian coordinates.
    */
@@ -143,7 +143,7 @@ public class PointCP2 {
       Theta = getY();
       Rho = temp;
    
-      typeCoord = 'C';	//Change coord type identifier
+      typeCoord = 'C';  //Change coord type identifier
     }
   }
 
