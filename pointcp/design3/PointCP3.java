@@ -52,7 +52,7 @@ public class PointCP3 {
     if(type != 'C' && type != 'P')
       throw new IllegalArgumentException();
     
-    //Store polar coordinates
+    //Store cartesian coordinates
     if(type == 'C'){
         this.x = x;
         this.y = y;

@@ -42,5 +42,6 @@ public abstract class PointCP5 {
 	@Override
 	public abstract String toString();
 }
+
 	
  
