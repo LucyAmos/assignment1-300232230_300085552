@@ -35,6 +35,7 @@ public class PointCPTest
   {
     PointCP2 point;
 
+
     System.out.println("Cartesian-Polar Coordinates Conversion Program");
 
     // Check if the user input coordinates from the command line
