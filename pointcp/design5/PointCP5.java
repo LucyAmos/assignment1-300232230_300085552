@@ -23,8 +23,6 @@ public abstract class PointCP5 {
 	  {
 	    if(type != 'C' && type != 'P')
 	      throw new IllegalArgumentException();
-	    
-	    //Store polar coordinates
 	  	
 		typeCoord = type;
 	  	
