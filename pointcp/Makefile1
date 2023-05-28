@@ -1,4 +1,0 @@
-main:
-	cp ./design2/*.java .
-	javac PointCP2.java PointCPTest.java
-	java PointCPTest

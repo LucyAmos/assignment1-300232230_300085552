@@ -94,9 +94,9 @@ public class PointCP3 {
     if(typeCoord != 'C')
     {
     	// Set x and y
-    	
+    	/*
       x = getX();
-      y = getY();
+      y = getY();*/
 
       typeCoord = 'C';  //Change coord type identifier
     }
@@ -112,9 +112,9 @@ public class PointCP3 {
     if(typeCoord != 'P')
     {
       //Calculate Rho and Theta
-      
+      /*
     	x = getRho();
-    	y = getTheta();
+    	y = getTheta();*/
       
    
       typeCoord = 'P';	//Change coord type identifier
@@ -167,8 +167,8 @@ public class PointCP3 {
   @Override
   public String toString()
   {
-    return "Calculated Value " + (typeCoord == 'P' 
-       ? "Polar  [" + getRho() + "," + getTheta() + "]"
-       : "Cartesian Stored as (" + getX() + "," + getY() + ")") + "\n";
+	  return (typeCoord == 'P' 
+		       ? "Polar Value as [" + getRho() + "," + getTheta() + "]"
+		       : "Cartesian Stored as (" + getX() + "," + getY() + ")") + "\n";
   }
 }

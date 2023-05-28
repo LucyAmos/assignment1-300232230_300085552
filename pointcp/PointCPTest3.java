@@ -6,12 +6,17 @@ import java.io.*;
 
 /**
  * This class prompts the user for a set of coordinates, and then 
- * converts them from polar to cartesian or vice-versa.
+ * converts them from cartesian to polar for PointCP3.
  *
  * @author Fran&ccedil;ois B&eacute;langer
  * @author Dr Timothy C. Lethbridge
  * @author Paul Holden
  * @version July 2000
+ * 
+ * Modified by:
+ * @author Lucy Amos
+ * @author Raphaelle Jean-Baptiste
+ * @version May 2023
  */
 public class PointCPTest3
 {
@@ -65,8 +70,8 @@ public class PointCPTest3
       }
     }
     System.out.println("\nYou entered:\n" + point);
-    point.convertStorageToCartesian();
-    System.out.println("\nAfter asking to calculate as Cartesian:\n" + point);
+    point.convertStorageToPolar();
+    System.out.println("\nAfter asking to convert to Polar:\n" + point);
     //point.convertStorageToPolar();
     //System.out.println("\nAfter asking to store as Polar:\n" + point);
   }

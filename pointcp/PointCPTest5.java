@@ -6,7 +6,7 @@ import java.io.*;
 
 /**
  * This class prompts the user for a set of coordinates, and then 
- * converts them from polar to cartesian or vice-versa.
+ * converts them from polar to cartesian or vice-versa for PointCP5.
  *
  * @author Fran&ccedil;ois B&eacute;langer
  * @author Dr Timothy C. Lethbridge
@@ -18,7 +18,7 @@ import java.io.*;
  * @author Raphaelle Jean-Baptiste
  * @version May 2023
  */
-public class PointCPTest
+public class PointCPTest5
 {
   //Class methods *****************************************************
 
@@ -39,7 +39,7 @@ public class PointCPTest
   public static void main(String[] args)
   {
 	long startTime = System.currentTimeMillis();
-    PointCP point;
+	PointCP5 point;
 
 
     System.out.println("Cartesian-Polar Coordinates Conversion Program");
@@ -49,9 +49,19 @@ public class PointCPTest
     // If he did not, prompt the user for them.
     try
     {
-      point = new PointCP(args[0].toUpperCase().charAt(0), 
-        Double.valueOf(args[1]).doubleValue(), 
-        Double.valueOf(args[2]).doubleValue());
+    	if(args[0].toUpperCase().charAt(0) == 'P') {
+	      point = new PointCPDesign2(args[0].toUpperCase().charAt(0), 
+	        Double.valueOf(args[1]).doubleValue(), 
+	        Double.valueOf(args[2]).doubleValue());
+    	}else if(args[0].toUpperCase().charAt(0) == 'C') {
+    		point = new PointCPDesign3(args[0].toUpperCase().charAt(0), 
+    		        Double.valueOf(args[1]).doubleValue(), 
+    		        Double.valueOf(args[2]).doubleValue());
+    	}else {
+    		point = new PointCPDesign3(args[0].toUpperCase().charAt(0), 
+    		        Double.valueOf(args[1]).doubleValue(), 
+    		        Double.valueOf(args[2]).doubleValue());	
+    	}
     }
     catch(Exception e)
     {
@@ -71,11 +81,9 @@ public class PointCPTest
       }
     }
     System.out.println("\nYou entered:\n" + point);
-    point.convertStorageToCartesian();
-    System.out.println("\nAfter asking to store as Cartesian:\n" + point);
-    point.convertStorageToPolar();
-    System.out.println("\nAfter asking to store as Polar:\n" + point);
-    long finishTime = System.currentTimeMillis();
+    point.convertStorage();
+  	System.out.println("\nAfter asking to convert point:\n" + point);
+  	long finishTime = System.currentTimeMillis();
     long timeElapsed = finishTime - startTime;
     System.out.println("Elapsed Time " + timeElapsed);
   }
@@ -85,12 +93,12 @@ public class PointCPTest
    * it is valid.  When the input is valid, it returns a PointCP
    * object.
    *
-   * @return A PointCP constructed using information obtained 
+   * @return A PointCP5 constructed using information obtained 
    *         from the user.
    * @throws IOException If there is an error getting input from
    *         the user.
    */
-  private static PointCP getInput() throws IOException
+  private static PointCP5 getInput() throws IOException
   {
     byte[] buffer = new byte[1024];  //Buffer to hold byte input
     boolean isOK = false;  // Flag set if input correct
@@ -168,6 +176,10 @@ public class PointCPTest
       isOK = false;
     }
     //Return a new PointCP object
-    return (new PointCP(coordType, a, b));
+    if(coordType == 'P') {
+    	return (new PointCPDesign2(coordType, a, b));
+    }else {
+    	return (new PointCPDesign3(coordType, a, b));
+    }
   }
 }

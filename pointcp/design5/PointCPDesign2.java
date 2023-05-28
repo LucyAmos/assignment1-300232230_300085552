@@ -38,20 +38,20 @@ public class PointCPDesign2 extends PointCP5 {
 	}
 
 	@Override
-	public void convertStorageToCartesian() {
+	public void convertStorage() {
 		 if(typeCoord != 'C')
 		    {
-		      double temp = getX();
+		      /*double temp = getX();
 		      Theta = getY();
-		      Rho = temp;
+		      Rho = temp;*/
 		   
 		      typeCoord = 'C';
 		    }
 
 	}
 
-	@Override
-	public void convertStorageToPolar() {
+	/*@Override
+	public void convertStorage() {
 		 if(typeCoord != 'P')
 		    {
 		      Rho = getRho();
@@ -60,7 +60,7 @@ public class PointCPDesign2 extends PointCP5 {
 		      
 		    }
 
-	}
+	}*/
 
 	@Override
 	public double getDistance(PointCP5 point) {
@@ -83,8 +83,8 @@ public class PointCPDesign2 extends PointCP5 {
 
 	@Override
 	public String toString() {
-		return "Calculated Value " + (typeCoord == 'C' 
-	       ? "Cartesian  (" + getX() + "," + getY() + ")"
+		return (typeCoord == 'C' 
+	       ? "Cartesian Value as (" + getX() + "," + getY() + ")"
 	       : "Polar Stored as [" + getRho() + "," + getTheta() + "]") + "\n";
 	}
 }

@@ -1,9 +1,11 @@
 public class PointCPDesign3 extends PointCP5 {
 	
+	private double x;
+	private double y;
 	
 	public PointCPDesign3(char type, double x, double y)
 	  {
-		super(type, x, y);
+		super(type);
 	    
 	    //Store cartesian coordinates
 	    if(type == 'C'){
@@ -35,7 +37,7 @@ public class PointCPDesign3 extends PointCP5 {
 		return Math.toDegrees(Math.atan2(y, x));
 	}
 
-	@Override
+	/*@Override
 	public void convertStorageToCartesian() {
 		if(typeCoord != 'C')
 	    {
@@ -46,16 +48,16 @@ public class PointCPDesign3 extends PointCP5 {
 
 	      typeCoord = 'C';  //Change coord type identifier
 	    }
-	}
+	}*/
 
 	@Override
-	public void convertStorageToPolar() {
+	public void convertStorage() {
 		if(typeCoord != 'P')
 	    {
 	      //Calculate Rho and Theta
 	      
-	    	x = getRho();
-	    	y = getTheta();
+	    	/*x = getRho();
+	    	y = getTheta();*/
 	    	
 	    	typeCoord = 'P';	//Change coord type identifier
 	    }
@@ -82,8 +84,8 @@ public class PointCPDesign3 extends PointCP5 {
 
 	@Override
 	public String toString() {
-		return "Calculated Value " + (typeCoord == 'P' 
-			       ? "Polar  [" + getRho() + "," + getTheta() + "]"
+		return (typeCoord == 'P' 
+			       ? "Polar Value as [" + getRho() + "," + getTheta() + "]"
 			       : "Cartesian Stored as (" + getX() + "," + getY() + ")") + "\n";
 	}
 
