@@ -38,6 +38,7 @@ public class PointCPTest2
    */
   public static void main(String[] args)
   {
+	long startTime = System.currentTimeMillis();
     PointCP2 point;
 
 
@@ -80,6 +81,9 @@ public class PointCPTest2
     System.out.println("\nAfter asking to convert to Cartesian:\n" + point);
     //point.convertStorageToPolar();
     //System.out.println("\nAfter asking to store as Polar:\n" + point);
+    long finishTime = System.currentTimeMillis();
+    long timeElapsed = finishTime - startTime;
+    System.out.println("Elapsed Time " + timeElapsed);
   }
 
 
