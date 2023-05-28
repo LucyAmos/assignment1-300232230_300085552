@@ -23,7 +23,7 @@ public class PointCPTest5
   //Class methods *****************************************************
 
   /**
-   * This method is responsible for the creation of the PointCP
+   * This method is responsible for the creation of the PointCP5
    * object.  This can be done in two ways; the first, by using the
    * command line and running the program using <code> java 
    * PointCPTest &lt;coordtype (c/p)&gt; &lt;X/RHO&gt; &lt;Y/THETA&gt;

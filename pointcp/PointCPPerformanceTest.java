@@ -2,182 +2,197 @@
 // "Object Oriented Software Engineering" and is issued under the open-source
 // license found at http://www.site.uottawa.ca/school/research/lloseng/
 
-import java.io.*;
+
+import java.util.Random;
 
 /**
- * This class prompts the user for a set of coordinates, and then 
- * converts them from polar to cartesian or vice-versa.
+ * This class calculates the average time in 5000 instances it takes to process operations in design 1 
+ * and design 5 in order to determine which is more efficient.
  *
- * @author Fran&ccedil;ois B&eacute;langer
- * @author Dr Timothy C. Lethbridge
- * @author Paul Holden
- * @version July 2000
+ * @author Lucy Amos
+ * @author Raphaelle Jean-Baptiste
+ * @version May 2023
  */
-public class PointCPTest5
+public class PointCPPerformanceTest
 {
   //Class methods *****************************************************
 
   /**
-   * This method is responsible for the creation of the PointCP
-   * object.  This can be done in two ways; the first, by using the
-   * command line and running the program using <code> java 
-   * PointCPTest &lt;coordtype (c/p)&gt; &lt;X/RHO&gt; &lt;Y/THETA&gt;
-   * </code> and the second by getting the program to prompt the user.
-   * If the user does not enter a valid sequence at the command line,
-   * the program will prompte him or her.
+   * This method is responsible for the creation of the PointCP and PointCP5
+   * object. 
    *
-   * @param args[0] The coordinate type.  P for polar and C for
-   *                cartesian.
-   * @param args[1] The value of X or RHO.
-   * @param args[2] The value of Y or THETA.
    */
   public static void main(String[] args)
   {
-	long startTime = System.currentTimeMillis();
-	PointCP5 point;
-    char typeId = 'A';
-
-
-    System.out.println("Cartesian-Polar Coordinates Conversion Program");
-
-    // Check if the user input coordinates from the command line
-    // If he did, create the PointCP object from these arguments.
-    // If he did not, prompt the user for them.
-    try
-    {
-    	if(args[0].toUpperCase().charAt(0) == 'P') {
-	      point = new PointCPDesign2(args[0].toUpperCase().charAt(0), 
-	        Double.valueOf(args[1]).doubleValue(), 
-	        Double.valueOf(args[2]).doubleValue());
-	      	typeId = 'P';
-    	}else if(args[0].toUpperCase().charAt(0) == 'C') {
-    		point = new PointCPDesign3(args[0].toUpperCase().charAt(0), 
-    		        Double.valueOf(args[1]).doubleValue(), 
-    		        Double.valueOf(args[2]).doubleValue());
-    		typeId = 'C';
-    	}else {
-    		point = new PointCPDesign3(args[0].toUpperCase().charAt(0), 
-    		        Double.valueOf(args[1]).doubleValue(), 
-    		        Double.valueOf(args[2]).doubleValue());	
-    	}
-    }
-    catch(Exception e)
-    {
-      // If we arrive here, it is because either there were no
-      // command line arguments, or they were invalid
-      if(args.length != 0)
-        System.out.println("Invalid arguments on command line");
-
-      try
-      {
-        point = getInput();
-      }
-      catch(IOException ex)
-      {
-        System.out.println("Error getting input. Ending program.");
-        return;
-      }
-    }
-    System.out.println("\nYou entered:\n" + point);
-    point.convertStorage();
-  	System.out.println("\nAfter asking to calculate:\n" + point);
-  	long finishTime = System.currentTimeMillis();
-    long timeElapsed = finishTime - startTime;
-    System.out.println(timeElapsed);
+	int instances = 50000;
+	
+	long design1TotalTimePolar = 0;
+	long design1TotalTimeCartesian = 0;
+	long design1TotalTimeConvertToPolar = 0;
+	long design1TotalTimeConvertToCartesian = 0;
+	long design1TotalTimeGetX = 0;
+	long design1TotalTimeGetY = 0;
+	long design1TotalTimeGetRho = 0;
+	long design1TotalTimeGetTheta = 0;
+	long design1TotalTimeToString = 0;
+	long design5TotalTimePolar = 0;
+	long design5TotalTimeCartesian = 0;
+	long design5TotalTimeConvertStorage = 0;
+	long design5TotalTimeGetX = 0;
+	long design5TotalTimeGetY = 0;
+	long design5TotalTimeGetRho = 0;
+	long design5TotalTimeGetTheta = 0;
+	long design5TotalTimeToString = 0;
+	
+	for(int i = 0; i < instances; i++) {
+		PointCP pointD1 = pointD1Generator();
+		PointCP5 pointD5 = pointD5Generator();
+		
+		long tempStart = System.nanoTime();
+		pointD1.getRho();
+		pointD1.getTheta();
+		long tempEnd = System.nanoTime();
+		design1TotalTimePolar += (tempEnd - tempStart);
+		
+		tempStart = System.nanoTime();
+		pointD5.getRho();
+		pointD5.getTheta();
+		tempEnd = System.nanoTime();
+		design5TotalTimePolar += (tempEnd - tempStart);
+		
+		tempStart = System.nanoTime();
+		pointD1.getX();
+		pointD1.getY();
+		tempEnd = System.nanoTime();
+		design1TotalTimeCartesian += (tempEnd - tempStart);
+		
+		tempStart = System.nanoTime();
+		pointD5.getX();
+		pointD5.getY();
+		tempEnd = System.nanoTime();
+		design5TotalTimeCartesian += (tempEnd - tempStart);
+		
+		tempStart = System.nanoTime();
+		pointD1.convertStorageToPolar();
+		tempEnd = System.nanoTime();
+		design1TotalTimeConvertToPolar += (tempEnd - tempStart);
+		
+		tempStart = System.nanoTime();
+		pointD5.convertStorage();
+		tempEnd = System.nanoTime();
+		design5TotalTimeConvertStorage += (tempEnd - tempStart);
+		
+		tempStart = System.nanoTime();
+		pointD1.convertStorageToCartesian();
+		tempEnd = System.nanoTime();
+		design1TotalTimeConvertToCartesian += (tempEnd - tempStart);
+		
+		tempStart = System.nanoTime();
+		pointD1.getX();
+		tempEnd = System.nanoTime();
+		design1TotalTimeGetX += (tempEnd - tempStart);
+		
+		tempStart = System.nanoTime();
+		pointD5.getX();
+		tempEnd = System.nanoTime();
+		design5TotalTimeGetX += (tempEnd - tempStart);
+		
+		tempStart = System.nanoTime();
+		pointD1.getY();
+		tempEnd = System.nanoTime();
+		design1TotalTimeGetY += (tempEnd - tempStart);
+		
+		tempStart = System.nanoTime();
+		pointD5.getY();
+		tempEnd = System.nanoTime();
+		design5TotalTimeGetY += (tempEnd - tempStart);
+		
+		tempStart = System.nanoTime();
+		pointD1.getRho();
+		tempEnd = System.nanoTime();
+		design1TotalTimeGetRho += (tempEnd - tempStart);
+		
+		tempStart = System.nanoTime();
+		pointD5.getRho();
+		tempEnd = System.nanoTime();
+		design5TotalTimeGetRho += (tempEnd - tempStart);
+		
+		tempStart = System.nanoTime();
+		pointD1.getTheta();
+		tempEnd = System.nanoTime();
+		design1TotalTimeGetTheta += (tempEnd - tempStart);
+		
+		tempStart = System.nanoTime();
+		pointD5.getTheta();
+		tempEnd = System.nanoTime();
+		design5TotalTimeGetTheta += (tempEnd - tempStart);
+		
+		tempStart = System.nanoTime();
+		pointD1.toString();
+		tempEnd = System.nanoTime();
+		design1TotalTimeToString += (tempEnd - tempStart);
+		
+		tempStart = System.nanoTime();
+		pointD5.toString();
+		tempEnd = System.nanoTime();
+		design5TotalTimeToString += (tempEnd - tempStart);
+	}
+		
+	System.out.println("Average Computation Speeds for Design 1 (Nanoseconds)");
+	System.out.println("......................................................");
+	System.out.println("Get polar coordinates: " + design1TotalTimePolar/instances);
+	System.out.println("Get cartesian coordinates: " + design1TotalTimeCartesian/instances);
+	System.out.println("Convert to polar coordinates: " + design1TotalTimeConvertToPolar/instances);
+	System.out.println("Convert to cartesian coordinates: " + design1TotalTimeConvertToCartesian/instances);
+	System.out.println("Get X coordinates: " + design1TotalTimeGetX/instances);
+	System.out.println("Get Y coordinates: " + design1TotalTimeGetY/instances);
+	System.out.println("Get Rho coordinates: " + design1TotalTimeGetRho/instances);
+	System.out.println("Get Theta coordinates: " + design1TotalTimeGetTheta/instances);
+	System.out.println("To string: " + design1TotalTimeToString/instances);
+	System.out.println();
+	System.out.println("Average Computation Speeds for Design 5 (Nanoseconds)");
+	System.out.println("......................................................");
+	System.out.println("Get polar coordinates: " + design5TotalTimePolar/instances);
+	System.out.println("Get cartesian coordinates: " + design5TotalTimeCartesian/instances);
+	System.out.println("Convert to opposite system: " + design5TotalTimeConvertStorage/instances);
+	System.out.println("Get X coordinates: " + design5TotalTimeGetX/instances);
+	System.out.println("Get Y coordinates: " + design5TotalTimeGetY/instances);
+	System.out.println("Get Rho coordinates: " + design5TotalTimeGetRho/instances);
+	System.out.println("Get Theta coordinates: " + design5TotalTimeGetTheta/instances);
+	System.out.println("To string: " + design5TotalTimeToString/instances);
+	
+	
   }
-
-  /**
-   * This method obtains input from the user and verifies that
-   * it is valid.  When the input is valid, it returns a PointCP
-   * object.
-   *
-   * @return A PointCP5 constructed using information obtained 
-   *         from the user.
-   * @throws IOException If there is an error getting input from
-   *         the user.
-   */
-  private static PointCP5 getInput() throws IOException
-  {
-    byte[] buffer = new byte[1024];  //Buffer to hold byte input
-    boolean isOK = false;  // Flag set if input correct
-    String theInput = "";  // Input information
-    
-    //Information to be passed to the constructor
-    char coordType = 'A'; // Temporary default, to be set to P or C
-    double a = 0.0;
-    double b = 0.0;
-
-    // Allow the user to enter the three different arguments
-    for (int i = 0; i < 3; i++)
-    {
-      while (!(isOK))
-      {
-        isOK = true;  //flag set to true assuming input will be valid
-          
-        // Prompt the user
-        if (i == 0) // First argument - type of coordinates
-        {
-          System.out.print("Enter the type of Coordinates you "
-            + "are inputting ((C)artesian / (P)olar): ");
-        }
-        else // Second and third arguments
-        {
-          System.out.print("Enter the value of " 
-            + (coordType == 'C' 
-              ? (i == 1 ? "X " : "Y ")
-              : (i == 1 ? "Rho " : "Theta ")) 
-            + "using a decimal point(.): ");
-        }
-
-        // Get the user's input      
-       
-        // Initialize the buffer before we read the input
-        for(int k=0; k<1024; k++)
-        	buffer[k] = '\u0020';        
-             
-        System.in.read(buffer);
-        theInput = new String(buffer).trim();
-        
-        // Verify the user's input
-        try
-        {
-          if (i == 0) // First argument -- type of coordinates
-          {
-            if (!((theInput.toUpperCase().charAt(0) == 'C') 
-              || (theInput.toUpperCase().charAt(0) == 'P')))
-            {
-              //Invalid input, reset flag so user is prompted again
-              isOK = false;
-            }
-            else
-            {
-              coordType = theInput.toUpperCase().charAt(0);
-            }
-          }
-          else  // Second and third arguments
-          {
-            //Convert the input to double values
-            if (i == 1)
-              a = Double.valueOf(theInput).doubleValue();
-            else
-              b = Double.valueOf(theInput).doubleValue();
-          }
-        }
-        catch(Exception e)
-        {
-        	System.out.println("Incorrect input");
-        	isOK = false;  //Reset flag as so not to end while loop
-        }
-      }
-
-      //Reset flag so while loop will prompt for other arguments
-      isOK = false;
-    }
-    //Return a new PointCP object
-    if(coordType == 'P') {
-    	return (new PointCPDesign2(coordType, a, b));
-    }else {
-    	return (new PointCPDesign3(coordType, a, b));
-    }
-  }
+	private static PointCP pointD1Generator() {
+		Random rand = new Random();
+		if (rand.nextBoolean() == true) {
+			char coordType = 'P';
+			double rho = rand.nextDouble();
+			double theta = rand.nextDouble();
+			return new PointCP(coordType, rho, theta);
+		}else {
+			char coordType = 'C';
+			double x = rand.nextDouble();
+			double y = rand.nextDouble();
+			return new PointCP(coordType, x, y);
+		}
+	}
+	
+	private static PointCP5 pointD5Generator() {
+		Random rand = new Random();
+		if (rand.nextBoolean() == true) {
+			char coordType = 'P';
+			double rho = rand.nextDouble();
+			double theta = rand.nextDouble();
+			return new PointCPDesign2(coordType, rho, theta);
+		}else {
+			char coordType = 'C';
+			double x = rand.nextDouble();
+			double y = rand.nextDouble();
+			return new PointCPDesign3(coordType, x, y);
+		}
+	}
 }
+
+
+    
